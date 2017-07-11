@@ -36,13 +36,18 @@ function movie() {
     var arr = process.argv.slice(3);
     var movieName = arr.join('+');
 
+    //if user doesn't type in a movie name. This is the default movie title.
+    if (movieName.length === 0) {
+        movieName = "Mr. Nobody";
+    }
+
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
 
     var request = require("request");
     request(queryUrl, function (error, response, body) {
         // If the request is successful (i.e. if the response status code is 200)
         if (!error && response.statusCode === 200) {
-            
+
             //console.log(body);// to find object names
 
             // showing the desire information in terminal
