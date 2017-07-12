@@ -1,43 +1,47 @@
 // Load the fs package to read and write
 var fs = require("fs");
-
+var inquirer = require("inquirer");
 var keys = require("./keys.js");
 var twitter = keys.twitterKeys;
 
 var command = process.argv[2];
 var input = process.argv[3];
 
-// The switch-case will direct which function gets run depending on which command the user gives.
+inquirer.prompt([
+    {
+        type: "list",
+        message: "Hello how can I help you today?",
+        choices: ["my-tweets", "spotify-this-song", "movie-this", "do-what-it-says"],
+        name: "userInput",
+    }
+]).then(function (userChoice) {
+    if (userChoice.userInput === "movie-this") {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "moviePick",
+                message: "What movie you want to look up?"
+    }
+]).then(function (movieInput) {
+        movie(movieInput.moviePick);
+        });
+    }else if(userChoice.userInput === "my-tweets"){
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "userName",
+                message: "Who latests tweets do you want to see?"
+    }
+]).then(function (tweetLookUp) {
+        twitter(tweetLookUp.userName);
+        });
+    }
+});
 
-switch (command) {
-    case "my-tweets":
-        tweets();
-        break;
 
-    case "spotify-this-song":
-        spotify();
-        break;
 
-    case "movie-this":
-        movie();
-        break;
-
-    case "do-what-it-says":
-        doIt();
-        break;
-
-    default:
-        console.log("Not a Choice");
-        break;
-};
-
-function movie() {
-
-    //removing the file pathing and command movie-this so only the the movie title is left.
-    var arr = process.argv.slice(3);
-    //movie connected with plus and not commas
-    var movieName = arr.join('+');
-
+function movie(movieName) {
+     
     //if user doesn't type in a movie name. This is the default movie title.
     if (movieName.length === 0) {
         movieName = "Mr. Nobody";
