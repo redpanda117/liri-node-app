@@ -85,6 +85,15 @@ function movie(movieName) {
             console.log("Plot: " + JSON.parse(body).Plot);
 
             console.log("Staring: " + JSON.parse(body).Actors);
+            
+            //adding the data to log.txt 
+                var movietxt = "\n" + "Movie Information" + "\n" + "Movie: " +JSON.parse(body).Title + "\n" + "This movie came out in " + JSON.parse(body).Year +"\n"+ "IMDB rated the movie: " + JSON.parse(body).imdbRating +"\n"+ "Rotten Tomatoes score: " + JSON.parse(body).Ratings[1].Value+"\n"+  "Movie was produced in " + JSON.parse(body).Country+ "\n"+ "Language: " + JSON.parse(body).Language+"\n" + "Plot: " + JSON.parse(body).Plot+"\n"+ "Staring: " + JSON.parse(body).Actors +"\n" + "=======================================";
+
+                fs.appendFile("log.txt", movietxt, function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
         }
     });
 }
