@@ -10,7 +10,7 @@ inquirer.prompt([
     {
         type: "list",
         message: "Hello how can I help you today?",
-        choices: ["movie-this","my-tweets", "spotify-this-song","do-what-it-says"],
+        choices: ["movie-this", "my-tweets", "spotify-this-song", "do-what-it-says"],
         name: "userInput",
     }
 ]).then(function (userChoice) {
@@ -48,7 +48,7 @@ inquirer.prompt([
             song(songInput.music);
         });
     } else {
-           doWhatItSays(); 
+        doWhatItSays();
     }
 
 
@@ -98,7 +98,7 @@ function twitter(userName) {
     var keys = require("./keys.js");
     var client = new Twitter(keys.twitterKeys);
 
-//if user does not give a username to look up 
+    //if user does not give a username to look up 
     if (userName.length === 0) {
         userName = "nguyentina2005";
     }
@@ -154,15 +154,21 @@ function song(songInput) {
 }
 
 //function for the action to be taken fro what ever is in the random.txt file.
-function doWhatItSays(){
-    var action = process.argv[2];
-    var name = process.argv[3];
+function doWhatItSays() {
+
 
     //read what existing in the file
-    fs.readFile('random.txt', 'utf8', function (err,data) {
-  if (err) {
-    return console.log(err);
-  }
-  console.log(data);
-});
+    fs.readFile('random.txt', 'utf8', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        //console.log(data);
+        var dataArr = data.split(",");
+        //console.log(dataArr);
+        var action = dataArr[0];
+        var name = dataArr[1];
+        if (action = "spotify-this-song") {
+            song(name);
+        }
+    });
 }
