@@ -2,10 +2,6 @@
 var fs = require("fs");
 var inquirer = require("inquirer");
 
-
-
-
-
 inquirer.prompt([
     {
         type: "list",
@@ -116,7 +112,16 @@ function twitter(userName) {
                 console.log(tweets[i].created_at);
                 console.log(tweets[i].text);
                 console.log("--------------------------------");
+                //adding the data to log.txt 
+                var twittertxt = "\n" + "Twitter Tweets" + "\n" + tweets[i].created_at + "\n" + tweets[i].text + "\n" + "=======================================";
+
+                fs.appendFile("log.txt", twittertxt, function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
             }
+
         }
     });
 }
@@ -147,10 +152,19 @@ function song(songInput) {
         console.log("Artist: " + data.tracks.items[0].artists[0].name)
 
         console.log("Album: " + data.tracks.items[0].album.name)
+        console.log("Link: " + data.tracks.items[0].preview_url)
 
-        console.log(data.tracks.items[0].album.external_urls)
+        //adding the data to log.txt 
+        var spotifytxt = "\n" + "Spotify Song" + "\n" + "Title: " + data.tracks.items[0].name + "\n" + "Artist: " + data.tracks.items[0].artists[0].name + "\n" + "Album: " + data.tracks.items[0].album.name + "\n" + "Link: " + data.tracks.items[0].preview_url + "\n" + "=======================================";
+
+        fs.appendFile("log.txt", spotifytxt, function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
 
     });
+
 }
 
 //function for the action to be taken fro what ever is in the random.txt file.
@@ -162,13 +176,18 @@ function doWhatItSays() {
         if (err) {
             return console.log(err);
         }
-        //console.log(data);
+        //console.log(data);see if file properly linked
+
+        //turn the data into an array
         var dataArr = data.split(",");
         //console.log(dataArr);
+
         var action = dataArr[0];
         var name = dataArr[1];
         if (action = "spotify-this-song") {
             song(name);
         }
     });
+
+
 }
