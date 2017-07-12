@@ -32,8 +32,10 @@ switch (command) {
 };
 
 function movie() {
-    // Then run a request to the OMDB API with the movie specified
+
+    //removing the file pathing and command movie-this so only the the movie title is left.
     var arr = process.argv.slice(3);
+    //movie connected with plus and not commas
     var movieName = arr.join('+');
 
     //if user doesn't type in a movie name. This is the default movie title.
@@ -43,6 +45,7 @@ function movie() {
 
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
 
+    // Then run a request to the OMDB API with the movie specified
     var request = require("request");
     request(queryUrl, function (error, response, body) {
         // If the request is successful (i.e. if the response status code is 200)
