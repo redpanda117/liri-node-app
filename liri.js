@@ -10,7 +10,7 @@ inquirer.prompt([
     {
         type: "list",
         message: "Hello how can I help you today?",
-        choices: ["my-tweets", "spotify-this-song", "movie-this", "do-what-it-says"],
+        choices: ["movie-this","my-tweets", "spotify-this-song","do-what-it-says"],
         name: "userInput",
     }
 ]).then(function (userChoice) {
@@ -48,7 +48,7 @@ inquirer.prompt([
             song(songInput.music);
         });
     } else {
-
+           doWhatItSays(); 
     }
 
 
@@ -151,4 +151,18 @@ function song(songInput) {
         console.log(data.tracks.items[0].album.external_urls)
 
     });
+}
+
+//function for the action to be taken fro what ever is in the random.txt file.
+function doWhatItSays(){
+    var action = process.argv[2];
+    var name = process.argv[3];
+
+    //read what existing in the file
+    fs.readFile('random.txt', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  console.log(data);
+});
 }
