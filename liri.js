@@ -3,6 +3,9 @@ var fs = require("fs");
 var inquirer = require("inquirer");
 
 
+
+
+
 inquirer.prompt([
     {
         type: "list",
@@ -44,6 +47,8 @@ inquirer.prompt([
 ]).then(function (songInput) {
             song(songInput.music);
         });
+    } else {
+
     }
 
 
@@ -91,11 +96,11 @@ function movie(movieName) {
 function twitter(userName) {
     var Twitter = require('twitter');
     var keys = require("./keys.js");
-
     var client = new Twitter(keys.twitterKeys);
 
+//if user does not give a username to look up 
     if (userName.length === 0) {
-        userName = "DummyData";
+        userName = "nguyentina2005";
     }
 
     var params = {
@@ -104,7 +109,14 @@ function twitter(userName) {
     };
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
-            console.log(tweets);
+
+            //looping through the 20 tweets to get time post and text from each tweet.
+            for (var i = 0; i < tweets.length; i++) {
+                //console.log(tweets[i]);
+                console.log(tweets[i].created_at);
+                console.log(tweets[i].text);
+                console.log("--------------------------------");
+            }
         }
     });
 }
@@ -112,15 +124,16 @@ function twitter(userName) {
 //function to get song info from spotify
 function song(songInput) {
     var Spotify = require('node-spotify-api');
-
     var spotify = new Spotify({
         id: "d130b2286a484fa9954bfcb482b2bc1c",
         secret: "4f61feb2f6e54cecb559782a3cc41b13"
     });
 
+    //if user does not enter a song
     if (songInput.length === 0) {
         songInput = "The Sign Ace of Base"
     }
+
     spotify.search({
         type: 'track',
         query: songInput
@@ -128,14 +141,14 @@ function song(songInput) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-
+        //information on the first song result of search to show up on the terminal
         console.log("Title: " + data.tracks.items[0].name);
-        
+
         console.log("Artist: " + data.tracks.items[0].artists[0].name)
-        
+
         console.log("Album: " + data.tracks.items[0].album.name)
-        
+
         console.log(data.tracks.items[0].album.external_urls)
-        
+
     });
 }
