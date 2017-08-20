@@ -13,3 +13,6 @@ You will be given a choice between these:
 •	do-what-it-says: if you pick this choice LIRI will read the file random.txt and execute whatever command is in there. 
 
 As you ask LIRI your search results will be recored into the log.txt file. 
+
+
+![App starts](Screenshot.jpg)
